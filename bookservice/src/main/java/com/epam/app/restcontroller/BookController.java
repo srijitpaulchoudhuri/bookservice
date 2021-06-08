@@ -23,7 +23,7 @@ import com.epam.app.service.BookService;
 public class BookController {
 	
 	@Autowired
-	BookService bookService;
+	private BookService bookService;
 	
 	@PostMapping
 	public ResponseEntity<Book> add(@RequestBody BookDto book){

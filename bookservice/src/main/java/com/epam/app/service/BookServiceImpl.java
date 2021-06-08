@@ -1,11 +1,11 @@
 package com.epam.app.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.epam.app.customexception.NoBookFoundException;
 import com.epam.app.dto.BookDto;
 import com.epam.app.model.Book;
 import com.epam.app.repository.BookRepository;
@@ -14,7 +14,7 @@ import com.epam.app.repository.BookRepository;
 public class BookServiceImpl implements BookService{
 	
 	@Autowired
-	BookRepository bookRepository;
+	private BookRepository bookRepository;
 
 	@Override
 	public Book add(BookDto bookDto) {
@@ -28,11 +28,8 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public Book get(int id) {
-		Optional<Book> book = bookRepository.findById(id);
-		if(book.isPresent())
-			return book.get();
-		return null;
+	public Book get(int id)throws NoBookFoundException {
+		return bookRepository.findById(id).orElseThrow(NoBookFoundException::new);
 	}
 
 	@Override
